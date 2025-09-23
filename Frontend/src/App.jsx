@@ -1,6 +1,8 @@
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, useLocation } from "react-router-dom";
 import Navbar from "./components/Navbar";
 import Home from "./pages/Home";
+import Login from "./pages/Login";
+import Signup from "./pages/Signup";
 
 // Placeholder components for the routes
 
@@ -26,15 +28,20 @@ const Resources = () => (
 );
 
 function App() {
+
+  const location = useLocation();
+  const hideNavbarOn = ["/login","/signup"]; // add more paths if needed
   return (
     <>
-      <Navbar />
+      {!hideNavbarOn.includes(location.pathname) && <Navbar />}
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/pricing" element={<Pricing />} />
         <Route path="/roadmap" element={<Roadmap />} />
         <Route path="/community" element={<Community />} />
         <Route path="/resources" element={<Resources />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/signup" element={<Signup />} />
       </Routes>
     </>
   );
