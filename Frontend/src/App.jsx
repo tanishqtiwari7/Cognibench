@@ -3,6 +3,8 @@ import Navbar from "./components/Navbar";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
+import Bench from "./pages/Arena/Bench";
+//import QR from "./pages/Arena/QR";
 
 // Placeholder components for the routes
 
@@ -30,10 +32,10 @@ const Resources = () => (
 function App() {
 
   const location = useLocation();
-  const hideNavbarOn = ["/login","/signup"]; // add more paths if needed
+  const hideNavbarOn = ["/login","/signup","/arena"].some(path => location.pathname.startsWith(path)); // add more paths if needed
   return (
     <>
-      {!hideNavbarOn.includes(location.pathname) && <Navbar />}
+      {!hideNavbarOn && <Navbar />}
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/pricing" element={<Pricing />} />
@@ -42,6 +44,8 @@ function App() {
         <Route path="/resources" element={<Resources />} />
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
+        <Route path="/arena/bench" element={<Bench />} />
+        {/* <Route path="/arena/qr" element={<QR />}/> */}
       </Routes>
     </>
   );
