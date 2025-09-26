@@ -25,7 +25,7 @@ const Bench = () => {
     selectedTool ? "bg-dot-grid" : ""
   }`}>
     <ToolBar onSelectTool={setSelectedTool} activeTool={selectedTool} />
-    <div >
+    <div>
     {selectedTool ? (
       tools[selectedTool]
     ) : (
