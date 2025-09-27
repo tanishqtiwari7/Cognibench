@@ -7,6 +7,11 @@ import UUIDgenerator from "./UUIDgenerator";
 import JWTdecoder from "./JWTdecoder";
 import LoremIpsum from "./LoremIpsum";
 import JSONformator from "./JSONformator";
+import HashGenerator from "./HashGenerator";
+import ColourConverter from "./ColourConverter";
+import MarkdownPreviewer from "./MarkdownPreviewer";
+import BgRemover from "./BgRemover";
+import AIsummarizer from "./AIsummarizer";
 
 const tools = {
   "QR Maker": <QR />,
@@ -14,11 +19,11 @@ const tools = {
   "JWT Decoder": <JWTdecoder />,
   "Lorem Ipsum": <LoremIpsum />,
   "JSON Formatter": <JSONformator />,
-  "Hash Generator": <div>Hash Generator Component</div>,
-  "Color Converter": <div>Color Converter Component</div>,
-  "Markdown Previewer": <div>Markdown Previewer Component</div>,
-  "Background Remover": <div>Background Remover Component</div>,
-  "AI Summarizer": <div>AI Summarizer Component</div>,
+  "Hash Generator": <HashGenerator />,
+  "Color Converter": <ColourConverter />,
+  "Markdown Previewer": <MarkdownPreviewer />,
+  "Background Remover": <BgRemover />,
+  "AI Summarizer": <AIsummarizer />,
 };
 
 const Bench = () => {

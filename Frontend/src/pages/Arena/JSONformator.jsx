@@ -1,7 +1,8 @@
 import React, { useState, useRef, useEffect } from "react";
 import { JSONTree } from "react-json-tree";
-import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
-import { duotoneSpace } from "react-syntax-highlighter/dist/esm/styles/prism";
+import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
+// 🚀 Changed import from duotoneSpace to coy
+import { coy } from 'react-syntax-highlighter/dist/esm/styles/prism';
 
 const JSONformator = () => {
   const [jsonInput, setJsonInput] = useState("");
@@ -49,6 +50,18 @@ const JSONformator = () => {
     setCopied(false);
   };
 
+  // Create a custom style based on 'coy' to ensure a transparent background
+  // and maintain padding within the output container
+  const coyWithCustomBackground = {
+    ...coy,
+    'pre[class*="language-"]': {
+        ...coy['pre[class*="language-"]'],
+        backgroundColor: 'transparent', // Overrides the theme's background to transparent
+        padding: 0, // Remove default padding from the pre tag
+        margin: 0,
+    },
+  };
+
   return (
     <div className="justify-center mt-20 flex">
       <div className="bg-white/90 p-7 rounded-xl shadow-md w-[900px] flex flex-col gap-4">
@@ -65,6 +78,7 @@ const JSONformator = () => {
             className="w-1/2 h-64 px-4 py-3 border border-gray-300 rounded-md text-sm font-mono resize-y focus:outline-none focus:ring-2 focus:ring-accent"
           />
 
+          {/* Note: The px-4 py-3 padding on this div is where the code content lives */}
           <div className="w-1/2 border border-dashed border-gray-300 rounded-md bg-white px-4 py-3 font-mono h-64 overflow-auto whitespace-pre-wrap text-sm">
             {error ? (
               <span className="text-red-600">{error}</span>
@@ -73,9 +87,10 @@ const JSONformator = () => {
                 {viewType === "pretty" && (
                   <SyntaxHighlighter
                     language="json"
-                    // style={duotoneSpace}
+                    // 🚀 Using the customized 'coy' theme
+                    style={coyWithCustomBackground}
                     wrapLongLines
-                    customStyle={{ backgroundColor: "#ffffff" }}
+                    // Removed customStyle prop as it's now handled by coyWithCustomBackground
                   >
                     {JSON.stringify(parsedJSON, null, 2)}
                   </SyntaxHighlighter>
@@ -83,9 +98,10 @@ const JSONformator = () => {
                 {viewType === "raw" && (
                   <SyntaxHighlighter
                     language="json"
-                    // style={duotoneSpace}
+                    // 🚀 Using the customized 'coy' theme
+                    style={coyWithCustomBackground}
                     wrapLongLines
-                    customStyle={{ backgroundColor: "#ffffff" }}
+                    // Removed customStyle prop
                   >
                     {JSON.stringify(parsedJSON)}
                   </SyntaxHighlighter>
