@@ -3,13 +3,17 @@ import { useState } from "react";
 import ToolBar from "../../components/ToolBar";
 import QR from "./QR";
 import Initial from "../../components/Initial";
+import UUIDgenerator from "./UUIDgenerator";
+import JWTdecoder from "./JWTdecoder";
+import LoremIpsum from "./LoremIpsum";
+import JSONformator from "./JSONformator";
 
 const tools = {
   "QR Maker": <QR />,
-  "UUID Generator": <div>UUID Generator Component</div>,
-  "JWT Decoder": <div>JWT Decoder Component</div>,
-  "Lorem Ipsum": <div>Lorem Ipsum Component</div>,
-  "JSON Formatter": <div>JSON Formatter Component</div>,
+  "UUID Generator": <UUIDgenerator />,
+  "JWT Decoder": <JWTdecoder />,
+  "Lorem Ipsum": <LoremIpsum />,
+  "JSON Formatter": <JSONformator />,
   "Hash Generator": <div>Hash Generator Component</div>,
   "Color Converter": <div>Color Converter Component</div>,
   "Markdown Previewer": <div>Markdown Previewer Component</div>,
