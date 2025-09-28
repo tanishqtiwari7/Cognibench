@@ -1,5 +1,11 @@
 import React from "react";
-import { FaGithub, FaShareAlt, FaQuestionCircle, FaSignOutAlt } from "react-icons/fa";
+import {
+  FaGithub,
+  FaShareAlt,
+  FaQuestionCircle,
+  FaSignOutAlt,
+} from "react-icons/fa";
+import { Link } from 'react-router-dom';
 
 const Initial = () => {
   return (
@@ -51,23 +57,31 @@ const Initial = () => {
               Explore
             </h1>
           </div>
-          <div className="flex flex-col gap-5 items-start md:mt-5">
-            <button className="flex items-center gap-2">
+          <div className="flex flex-col gap-2 items-start md:mt-5">
+            <a
+              href="https://github.com/tanishqtiwari7/Cognibench"
+              target="_blank" // opens in new tab
+              rel="noopener noreferrer" // security best practice
+              className="flex items-center gap-2 hover:text-black hover:bg-accent/30 py-1 px-3 rounded-md md:w-[10rem]"
+            >
               <FaGithub />
               <h1>Star on Github</h1>
-            </button>
-            <button className="flex items-center gap-2">
+            </a>
+            <button className="flex items-center gap-2 hover:text-black hover:bg-accent/30 py-1 px-3 rounded-md md:w-[10rem]">
               <FaShareAlt />
               <h1>Liveshare</h1>
             </button>
-            <button className="flex items-center gap-2">
+            <button className="flex items-center gap-2 hover:text-black hover:bg-accent/30 py-1 px-3 rounded-md md:w-[10rem]">
               <FaQuestionCircle />
               <h1>Help</h1>
             </button>
-            <button className="flex items-center gap-2">
+            <Link
+              to="/"
+              className="flex items-center gap-2 hover:text-black hover:bg-accent/30 py-1 px-3 rounded-md md:w-[10rem]"
+            >
               <FaSignOutAlt />
               <h1>Log out</h1>
-            </button>
+            </Link>
           </div>
         </div>
         {/* </div> */}

@@ -1,8 +1,8 @@
 import React, { useState, useRef, useEffect } from "react";
 import { JSONTree } from "react-json-tree";
-import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
-// 🚀 Changed import from duotoneSpace to coy
-import { coy } from 'react-syntax-highlighter/dist/esm/styles/prism';
+import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
+
+import { coy } from "react-syntax-highlighter/dist/esm/styles/prism";
 
 const JSONformator = () => {
   const [jsonInput, setJsonInput] = useState("");
@@ -12,6 +12,31 @@ const JSONformator = () => {
   const [viewType, setViewType] = useState("pretty");
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const dropdownRef = useRef(null);
+  const [outputHeight, setOutputHeight] = useState(400); // Default height
+  const inputRef = useRef(null);
+  const outputRef = useRef(null);
+
+  useEffect(() => {
+    const updateHeight = () => {
+      if (inputRef.current) {
+        setOutputHeight(inputRef.current.clientHeight);
+      }
+    };
+
+    updateHeight();
+
+    const observer = new ResizeObserver(updateHeight);
+    if (inputRef.current) {
+      observer.observe(inputRef.current);
+    }
+
+    // Cleanup function
+    return () => {
+      if (inputRef.current) {
+        observer.unobserve(inputRef.current);
+      }
+    };
+  }, []); // Empty dependency array ensures it runs once on mount
 
   useEffect(() => {
     const handleClickOutside = (e) => {
@@ -20,8 +45,7 @@ const JSONformator = () => {
       }
     };
     document.addEventListener("mousedown", handleClickOutside);
-    return () =>
-      document.removeEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
   const handleParse = () => {
@@ -55,10 +79,10 @@ const JSONformator = () => {
   const coyWithCustomBackground = {
     ...coy,
     'pre[class*="language-"]': {
-        ...coy['pre[class*="language-"]'],
-        backgroundColor: 'transparent', // Overrides the theme's background to transparent
-        padding: 0, // Remove default padding from the pre tag
-        margin: 0,
+      ...coy['pre[class*="language-"]'],
+      backgroundColor: "transparent", // Overrides the theme's background to transparent
+      padding: 0, // Remove default padding from the pre tag
+      margin: 0,
     },
   };
 
@@ -72,6 +96,7 @@ const JSONformator = () => {
         {/* Side-by-side input/output */}
         <div className="flex gap-4">
           <textarea
+            ref={inputRef} // 🚀 Attach ref
             value={jsonInput}
             onChange={(e) => setJsonInput(e.target.value)}
             placeholder="Paste your JSON here..."
@@ -79,7 +104,10 @@ const JSONformator = () => {
           />
 
           {/* Note: The px-4 py-3 padding on this div is where the code content lives */}
-          <div className="w-1/2 border border-dashed border-gray-300 rounded-md bg-white px-4 py-3 font-mono h-64 overflow-auto whitespace-pre-wrap text-sm">
+          <div
+           ref={outputRef} // 🚀 Attach ref
+            style={{ height: outputHeight }} // 🚀 Dynamic height set by state
+           className="w-1/2 border border-dashed border-gray-300 rounded-md bg-white px-4 py-3 font-mono  overflow-auto whitespace-pre-wrap text-sm">
             {error ? (
               <span className="text-red-600">{error}</span>
             ) : parsedJSON ? (
@@ -161,20 +189,20 @@ const JSONformator = () => {
           <button
             onClick={handleParse}
             disabled={!jsonInput}
-            className="py-2 px-6 rounded-md bg-dark-lavender text-white font-semibold hover:opacity-90 transition disabled:opacity-50"
+            className="py-2 px-6 w-full rounded-md bg-dark-lavender text-white font-semibold hover:opacity-90 transition disabled:opacity-50"
           >
             Format
           </button>
           <button
             onClick={handleCopy}
             disabled={!parsedJSON}
-            className="py-2 px-6 rounded-md bg-accent text-white font-semibold hover:opacity-90 transition disabled:opacity-50"
+            className="py-2 px-6 w-full rounded-md bg-accent text-white font-semibold hover:opacity-90 transition disabled:opacity-50"
           >
             {copied ? "Copied!" : "Copy"}
           </button>
           <button
             onClick={handleClear}
-            className="py-2 px-6 rounded-md bg-gray-200 text-gray-700 font-semibold hover:bg-gray-300 transition"
+            className="py-2 px-6 w-full rounded-md bg-gray-200 text-gray-700 font-semibold hover:bg-gray-300 transition"
           >
             Clear
           </button>

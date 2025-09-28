@@ -1,4 +1,5 @@
 import React from "react";
+import { useEffect, useRef ,useState} from "react";
 import {
   FaQrcode,
   FaKey,
@@ -12,6 +13,7 @@ import {
   FaAlignLeft,
   FaBookOpen,
 } from "react-icons/fa";
+import Hamburger from "./Hamburger";
 
 const tools = [
   { name: "QR Maker", icon: <FaQrcode /> },
@@ -27,14 +29,41 @@ const tools = [
 ];
 
 const ToolBar = ({ onSelectTool, activeTool }) => {
+const [isOpen, setIsOpen] = useState(false);
+  const menuRef = useRef(null);
+
+  // 🔑 Close when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (e) => {
+      if (menuRef.current && !menuRef.current.contains(e.target)) {
+        setIsOpen(false);
+      }
+    };
+    if (isOpen) {
+      document.addEventListener("mousedown", handleClickOutside);
+    }
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [isOpen]);
+
+
   return (
     <div className="sticky top-7 z-50 w-full mb-8">
       <div className="relative flex items-center justify-between w-full px-6 max-w-8xl mx-auto">
         {/* Left: Hamburger */}
-        <div>
-          <button className="px-3 py-2 rounded-md bg-gray-200 hover:bg-gray-300">
+         <div ref={menuRef}>
+          <button
+            className="px-3 py-2 rounded-md bg-gray-200 hover:bg-gray-300"
+            onClick={() => setIsOpen(!isOpen)}
+          >
             ☰
           </button>
+          {isOpen && (
+            <div className="absolute top-full left-5 mt-2 rounded-lg shadow-lg">
+              <Hamburger onClose={() => setIsOpen(false)} />
+            </div>
+          )}
         </div>
 
         {/* Center: Tool capsule (absolute center of viewport) */}
@@ -68,9 +97,14 @@ const ToolBar = ({ onSelectTool, activeTool }) => {
         </div>
         {/* Right: Other buttons */}
         <div className="flex gap-2">
-          <button className="px-3 py-2 rounded-md bg-accent hover:bg-accent/80 text-xs">
-            GitHub
-          </button>
+   <a
+  href="https://github.com/tanishqtiwari7/Cognibench"
+  target="_blank"
+  rel="noopener noreferrer"
+  className="px-3 py-2 rounded-md bg-accent hover:bg-accent/80 text-xs"
+>
+  GitHub
+</a>
           <button className="flex items-center gap-2 px-3 py-2 rounded-md bg-gray-200 hover:bg-gray-300 text-xs">
             Library
             <FaBookOpen className="text-md" />
