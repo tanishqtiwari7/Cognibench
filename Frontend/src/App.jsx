@@ -1,6 +1,7 @@
 import { Routes, Route, useLocation } from "react-router-dom";
 import Navbar from "./components/Navbar";
 import Home from "./pages/Home";
+import Pricing from "./pages/Pricing";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 import Bench from "./pages/Arena/Bench";
@@ -8,11 +9,12 @@ import Bench from "./pages/Arena/Bench";
 
 // Placeholder components for the routes
 
-const Pricing = () => (
-  <div className="p-8 pt-24">
-    <h1 className="text-2xl">Pricing Page</h1>
-  </div>
-);
+// const Pricing = () => (
+//   <div className="p-8 pt-24">
+//     <h1 className="text-2xl">Pricing Page</h1>
+//   </div>
+// );
+
 const Roadmap = () => (
   <div className="p-8 pt-24">
     <h1 className="text-2xl">Roadmap Page</h1>
